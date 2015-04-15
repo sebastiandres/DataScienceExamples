@@ -1,6 +1,11 @@
+# HW: Playing around with files.
+# Link: https://courses.thinkful.com/data-001v2/project/1.1.6
+
 from collections import defaultdict
 
-dd = defaultdict(dict)
+dd = defaultdict(dict)   #SF# Excellent, I love default dics!
+
+#SF# I'm not really sure what you wanted to do from here on...
 
     #header = next(inputfile)
 
@@ -38,5 +43,3 @@ for key, entry in dd.iteritems():
 #    for key, value in dd.iteritems():
 #        print key, '\n', value
 #        output.write(key + ',' + value + '\n' )
-
-
