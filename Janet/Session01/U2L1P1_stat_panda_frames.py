@@ -1,3 +1,6 @@
+# HW: 
+# https://courses.thinkful.com/data-001v2/project/2.1.1
+
 import pandas as pd
 from scipy import stats
 
