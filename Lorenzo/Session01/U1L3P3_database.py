@@ -1,3 +1,5 @@
+#Why: User pysql and pandas to create and load a db, and use it.
+#Where:  https://courses.thinkful.com/data-001v2/project/1.3.3
 import sqlite3 as sql
 import pandas as pd
 
@@ -32,32 +34,67 @@ weather = (
     ('Atlanta','2013','July','January','82'))		  #value interpreted
 
 #connect to the data base
-con = sql.connect('getting_satrted.db')
+con = sql.connect('getting_started.db')
 
 with con:
-
 	cur = con.cursor()
+        #SF# Try to explain why you're doing this, it'll make easier to reuse your code!
+        # Avoid conflict if table cities already exist by deleting it
 	cur.execute("DROP TABLE IF EXISTS cities;")
-	cur.execute("DROP TABLE IF EXISTS weather;")
 	cur.execute("CREATE TABLE cities (name text, state text);")
+        # Avoid conflict if table cities already exist by deleting it
+	cur.execute("DROP TABLE IF EXISTS weather;")
 	cur.execute("CREATE TABLE weather (city text, year integer, warm_month text, cold_month text, average_high integer);")
-	cur.executemany("INSERT INTO cities VALUES(?,?)",cities)
-	cur.executemany("INSERT INTO weather VALUES(?,?,?,?,?)",weather)
-	cur.execute("SELECT name, state, year,warm_month,cold_month,average_high FROM cities INNNER JOIN weather ON name=city GROUP BY city HAVING warm_month=='July'" )
+        # Populate the database
+	cur.executemany("INSERT INTO cities VALUES(?,?)", cities)
+	cur.executemany("INSERT INTO weather VALUES(?,?,?,?,?)", weather)
+        #SF# Notice how you can break lines so it can be read
+	cur.execute("SELECT name, state, year,warm_month,cold_month,average_high \
+                     FROM cities INNNER JOIN weather ON name=city \
+                     GROUP BY city HAVING warm_month=='July'" )
 	# cur.execute("SELECT name,state")
 	rows = cur.fetchall()
 	cols = [desc[0] for desc in cur.description]
 
-	df = pd.DataFrame(rows, columns=cols)
+#SF# Now you're ready with the answer, there's no need to keep in the "with con:" loop
+df = pd.DataFrame(rows, columns=cols)
 
-##### Comment LP:
-##### I do not found a solution to print the sentence on one line as the assignement state:
-##### I think it will be something like :
-#####		print 'The cities that are warmest in July are: ' + df.name[i] + ", " + df.state[i] for i in range(1)
-##### but it doesn't work and on the pandas forum i was not able to find the solution:
+#LP# <- This will always be your comment
+#LP# I do not found a solution to print the sentence on one line as the assignement state:
+#LP# I think it will be something like :
+#LP#		print 'The cities that are warmest in July are: ' + df.name[i] + ", " + df.state[i] for i in range(1)
+#LP# but it doesn't work and on the pandas forum i was not able to find the solution:
 
-##### This will be my closest solution.
+#LP# This will be my closest solution.
 
-	print 'The cities that are warmest in July are: '
-	print df.name + ", " + 	df.state
+print 'The cities that are warmest in July are: '
+print df.name + ", " + 	df.state
 
+#SF# OK, so the answer was something close to
+cities_and_states = ""
+for city,state in zip(df.name,df.state):
+    cities_and_states += city+", "+state+", "
+# Now there's an extra ", " at the end
+cities_and_states = cities_and_states[:-2]
+
+print('The cities that are warmest in July are: {0}'.format(cities_and_states))
+
+#SF# Now, that is a long and convoluted way. There's a more direct way. Also, the query returns every single city.
+
+#connect to the data base
+with sql.connect('getting_started.db') as con:
+    cur = con.cursor()
+    # Get the cities where the warmest month is July
+    cur.execute("SELECT name, state \
+                 FROM cities INNNER JOIN weather ON name=city \
+                 GROUP BY city HAVING warm_month=='July'" )
+    # cur.execute("SELECT name,state")
+    cities_and_states = cur.fetchall()
+
+cities_coma_states = [c+" ("+s+")" for (c,s) in cities_and_states]
+formated_answer = ", ".join(cities_coma_states[:-1]) + " and " + cities_coma_states[-1]
+print('The cities that are warmest in July are: {0}'.format(formated_answer))
+
+#SF# Hope you like the answers. There's some really advanced python there, so don't get disapointed.
+#SF# You'll get that in no time. The string.join method is really powerful on strings.
+#SF# Also, list comprehensions are one of the coolest features in python.
