@@ -11,10 +11,22 @@ Write a script called "prob_lending_club.py" that reads in the loan data,
  with the values from the "Amount.Funded.By.Investors".
 '''
 
+""" #SF#
+This is again very well written.
+You're good at coding, so I want you to try go beyond the formal request of the homework.
+If you really had to present this information in a meeting, how would you proceed?
+In my case, I would present always the two plots side by side, left the amount funded
+and right the amount requested, so comparing the two is natural. 
+I didn't wanted to do it here because  I would have to do massive 
+internal changes.
+"""
+
 import matplotlib.pyplot as plt
 import scipy.stats as stats
 import pandas as pd
 import os as os
+
+from IPython import embed as ip
 
 def draw_boxplot(data_frame, col_name):
     data_frame.boxplot(column=col_name)
@@ -23,7 +35,11 @@ def draw_boxplot(data_frame, col_name):
 
 def draw_histogram(data_frame, col_name):
     # JR: how does it decide interval size?
-    data_frame.hist(column=col_name)
+    # SF: The number of bins is defaulted to 10,
+    # SF: the bins range from min to max,
+    # SF: and you can change this using the optional argument!
+    # SF: Use IPython library to jump into the functions and ask help on new functions.
+    data_frame.hist(column=col_name, bins=20, color="r")
     plt.savefig(col_name + '_histogram.png')
     plt.show()
 

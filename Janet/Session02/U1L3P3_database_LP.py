@@ -5,21 +5,6 @@
 
 import sqlite3 as sql
 import pandas as pd
-##SF## New library
-import sys
-
-if len(sys.argv)==1:
-    month = "July"
-elif len(sys.argv)==2:
-    month = sys.argv[1]
-else:
-    month = sys.argv[1]
-    print "Additional parameters ignored"
-
-# Sanitize the string
-month = month.capitalize()
-
-print "Selected month: ", month
 
 cities = (
 	('New York City','NY'),
@@ -67,19 +52,37 @@ with con:
 	cur.executemany("INSERT INTO cities VALUES(?,?)", cities)
 	cur.executemany("INSERT INTO weather VALUES(?,?,?,?,?)", weather)
         #SF# Notice how you can break lines so it can be read
-	"""
-	query = "SELECT name, state, year,warm_month,cold_month,average_high \
-                 FROM cities INNNER JOIN weather ON name=city \
-                 GROUP BY city HAVING warm_month=='%s'" %month
-	print query
-	cur.execute(query)
+	cur.execute("SELECT name, state, year,warm_month,cold_month,average_high \
+                     FROM cities INNNER JOIN weather ON name=city \
+                     GROUP BY city HAVING warm_month=='July'" )
 	# cur.execute("SELECT name,state")
 	rows = cur.fetchall()
 	cols = [desc[0] for desc in cur.description]
-        """	
-	
+
 #SF# Now you're ready with the answer, there's no need to keep in the "with con:" loop
-#df = pd.DataFrame(rows, columns=cols)
+df = pd.DataFrame(rows, columns=cols)
+
+#LP# <- This will always be your comment
+#LP# I do not found a solution to print the sentence on one line as the assignement state:
+#LP# I think it will be something like :
+#LP#		print 'The cities that are warmest in July are: ' + df.name[i] + ", " + df.state[i] for i in range(1)
+#LP# but it doesn't work and on the pandas forum i was not able to find the solution:
+
+#LP# This will be my closest solution.
+
+print 'The cities that are warmest in July are: '
+print df.name + ", " + 	df.state
+
+#SF# OK, so the answer was something close to
+cities_and_states = ""
+for city,state in zip(df.name,df.state):
+    cities_and_states += city+", "+state+", "
+# Now there's an extra ", " at the end
+cities_and_states = cities_and_states[:-2]
+
+print('The cities that are warmest in July are: {0}'.format(cities_and_states))
+
+#SF# Now, that is a long and convoluted way. There's a more direct way. Also, the query returns every single city.
 
 #connect to the data base
 with sql.connect('getting_started.db') as con:
@@ -87,16 +90,13 @@ with sql.connect('getting_started.db') as con:
     # Get the cities where the warmest month is July
     cur.execute("SELECT name, state \
                  FROM cities INNNER JOIN weather ON name=city \
-                 GROUP BY city HAVING warm_month=='%s'" %month )
+                 GROUP BY city HAVING warm_month=='July'" )
     # cur.execute("SELECT name,state")
     cities_and_states = cur.fetchall()
 
-if len(cities_and_states)>0:
-    cities_coma_states = [c+" ("+s+")" for (c,s) in cities_and_states]
-    formated_answer = ", ".join(cities_coma_states[:-1]) + " and " + cities_coma_states[-1]
-    print('The cities that are warmest in {0} are: {1}'.format(month, formated_answer))
-else:
-    print('No city is warmest in {0}'.format(month))
+cities_coma_states = [c+" ("+s+")" for (c,s) in cities_and_states]
+formated_answer = ", ".join(cities_coma_states[:-1]) + " and " + cities_coma_states[-1]
+print('The cities that are warmest in July are: {0}'.format(formated_answer))
 
 #SF# Hope you like the answers. There's some really advanced python there, so don't get disapointed.
 #SF# You'll get that in no time. The string.join method is really powerful on strings.

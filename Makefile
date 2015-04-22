@@ -1,7 +1,4 @@
-# SWEET'S MAKEFILE
 # .PHONY. allows to always execute the instruction, (no checking for the existence)
-
-TESTS = -5 -4 -3 -2 -1 0 1 2 3 4 5 20 21 22 23 24 25
 
 .PHONY.: options
 options:
@@ -17,6 +14,8 @@ push:
 
 .PHONY.: clean
 clean:
+	@find . -name "*.png" -delete
+	@find . -name "*.pdf" -delete
 	@find . -name "*.pyc" -delete
 	@find . -name "*.py~" -delete
 	@find . -name "*.pyo" -delete
