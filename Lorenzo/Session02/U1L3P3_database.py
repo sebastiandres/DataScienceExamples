@@ -5,6 +5,21 @@
 
 import sqlite3 as sql
 import pandas as pd
+##SF## New library
+import sys
+
+if len(sys.argv)==1:
+    month = "July"
+elif len(sys.argv)==2:
+    month = sys.argv[1]
+else:
+    month = sys.argv[1]
+    print "Additional parameters ignored"
+
+# Sanitize the string
+month = month.capitalize()
+
+print "Selected month: ", month
 
 cities = (
 	('New York City','NY'),
@@ -54,7 +69,7 @@ with con:
         #SF# Notice how you can break lines so it can be read
 	cur.execute("SELECT name, state, year,warm_month,cold_month,average_high \
                      FROM cities INNNER JOIN weather ON name=city \
-                     GROUP BY city HAVING warm_month=='July'" )
+                     GROUP BY city HAVING warm_month=='May'" )
 	# cur.execute("SELECT name,state")
 	rows = cur.fetchall()
 	cols = [desc[0] for desc in cur.description]
@@ -70,7 +85,7 @@ df = pd.DataFrame(rows, columns=cols)
 
 #LP# This will be my closest solution.
 
-print 'The cities that are warmest in July are: '
+print 'The cities that are warmest in %s are: ' %month
 print df.name + ", " + 	df.state
 
 #SF# OK, so the answer was something close to
