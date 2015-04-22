@@ -1,3 +1,6 @@
+# Visualizing Lending Club Data
+# https://courses.thinkful.com/data-001v2/project/2.2.2
+
 import matplotlib.pyplot as plt
 import pandas as pd
 import scipy.stats as stats
