@@ -8,9 +8,9 @@ import seaborn as sns
 
 filename='dat/loansData.csv'
 loansData = pd.read_csv(filename)
+loansData.dropna(inplace=True)
 colname=['Amount.Requested','Amount.Funded.By.Investors']
 data=[loansData[colname[0]],loansData[colname[1]]]
-loansData.dropna(inplace=True)
 
 sns.boxplot(data, names=["Amount.Requested", "Amount.Funded.By.Investors"], color='pastel')
 plt.savefig("boxplot.pdf", bbox_inches='tight')
