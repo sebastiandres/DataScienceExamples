@@ -39,7 +39,8 @@ est = smf.ols(formula='int_rate ~ annual_inc', data=loansData).fit()
 plt.plot(annincome_linspace, est.params[0] + est.params[1]*annincome_linspace, 'r')
 plt.show()
 
-plt.figure(figsize=(6 * 1.618, 6))
+# LP # Added home_ownership without interaction
+plt.figure(figsize=(10, 6))
 plt.scatter(loansData.annual_inc, loansData.int_rate, s=10, alpha=0.3)
 plt.xlabel('Annual Income')
 plt.ylabel('Interest rate')
@@ -50,8 +51,8 @@ plt.plot(annincome_linspace, est_b.params[0] + est_b.params[3]*annincome_linspac
 plt.plot(annincome_linspace, est_b.params[0] + est_b.params[3]*annincome_linspace + est_b.params[2] * 1, 'y')
 plt.show()
 
-
-plt.figure(figsize=(6 * 1.618, 6))
+# LP # Added home_ownership with interaction
+plt.figure(figsize=(10, 6))
 plt.scatter(loansData.annual_inc, loansData.int_rate, s=10, alpha=0.3)
 plt.xlabel('Annual Income')
 plt.ylabel('Interest rate')
