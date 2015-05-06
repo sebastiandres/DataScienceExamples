@@ -3,7 +3,7 @@
 
 # In[23]:
 
-get_ipython().magic(u'matplotlib inline')
+#get_ipython().magic(u'matplotlib inline')
 
 
 # In[21]:
