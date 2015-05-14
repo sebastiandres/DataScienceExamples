@@ -31,7 +31,7 @@ df = pd.DataFrame({'Bear Market': [.8, .15, .05],
 
 # Question 1 # 
 # Translate the Markov chain below to a matrix. What are the transition probabilities after 1 transition? #
-A = np.array([[.800, .150, .050],
+A = np.array([[	.800, .150, .050],
               [.075, .900, .025], 
               [.250, .250, .500]])
 # or #
@@ -60,3 +60,10 @@ print np.linalg.matrix_power(A,30+1)
 
 # Extra Question: How can you know for sure when it converges? #
 # IE, a more scientific method? #
+tol,
+np.norm( np.linalg.matrix_power(A,n+1) - np.linalg.matrix_power(A,n+1+1)) ) < tol
+
+
+
+
+

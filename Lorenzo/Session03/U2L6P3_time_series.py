@@ -15,6 +15,7 @@ df['issue_d_format'] = pd.to_datetime(df['issue_d'])
 dfts = df.set_index('issue_d_format')
 # Why would we want this? Explain...
 year_month_summary = dfts.groupby(lambda x : x.year * 100 + x.month).count()
+
 loan_count_summary = year_month_summary['issue_d']
 loan_count_summary.to_csv("LoanStatsGrouped.csv", index=True) # We can read later more rapidly
 #loan_count_summary = pd.read_csv('LoanStatsGrouped.csv')
