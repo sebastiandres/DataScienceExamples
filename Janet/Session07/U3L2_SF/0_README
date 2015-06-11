@@ -1,0 +1,4 @@
+Run in order:
+python 1_obtain_data_for_city.py Boston
+python 2_process_data_for_city.py Boston
+python 3_visualize_data_for_city.py Boston

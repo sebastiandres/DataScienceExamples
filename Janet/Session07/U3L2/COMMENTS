@@ -1,0 +1,17 @@
+Although not in the guidelines of the Lesson, it is a REALLY GREAT work.
+Some comments:
+- No problem if you want to think outside the box, but give at least a README so I don't have to do inverse engineering ;)
+
+- Good idea to save the api key in a file, but you ended up commiting your true api key!
+
+- weather_utils fails if folder /data has not been created (use os.exist(folder) and os.mkdir(folder))
+
+- One problem with this approach is that the city choice is somewhat obscured, when it should be an upfront variable.
+  We should even ask the user for a given city! :)
+
+- How do you get boston_last_30_days.json?? Why would you want that in the first place?
+
+- I think the flow of the project can be structured in a more clean way:
+  1_get_data_for_city.py
+  2_process_data_for_city.py
+  3_visualize_data_for_city.py

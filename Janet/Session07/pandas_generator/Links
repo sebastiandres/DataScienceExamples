@@ -1,0 +1,18 @@
+https://www.chrisstucchio.com/blog/2013/hadoop_hatred.html
+- If less than your actual notebook RAM, i'll load. Not in excell, but ok for python, pandas, numpy, etc.
+- If less than 16 GB, or less than 48 GB, just buy a larger computer. They are not THAT expensive.
+- If less than 4 TB, buy a really big harddrive and load from there. It won't be so slow.
+- If larger than 4TB, boy, move to hadoop, sparks, etc.
+
+https://www.airpair.com/python/posts/top-mistakes-python-big-data-analytics#2-mistake-1-reinventing-the-wheel
+Nice example on top ten articles. Should make a similar example.
+
+
+http://stackoverflow.com/questions/14262433/large-data-work-flows-using-pandas
+
+http://pandas.pydata.org/pandas-docs/dev/io.html#iterating-through-files-chunk-by-chunk
+
+http://pandas.pydata.org/pandas-docs/dev/io.html#multiple-table-queries
+
+http://pandas.pydata.org/pandas-docs/dev/io.html#hdf5-pytables
+

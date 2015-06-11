@@ -1,0 +1,7 @@
+# If data folder does not exists
+1- mkdir data
+2- python weather_utils.py # To download the json files
+3- ???
+
+# If data folder exists
+python U3L2P4_analyzing_temp_data.py
